@@ -6,11 +6,15 @@ function Header() {
         <header className='flex items-center justify-between px-6 py-4'>
             <nav className='flex items-center gap-4'>
                 <Link to="/">
-                    Fitnesstracker
+                    uMetryk
                 </Link>
 
                 <Link to="/">
                     <Button>Home</Button>
+                </Link>
+
+                <Link to="/download">
+                    <Button>Download</Button>
                 </Link>
                 
                 <Link to="/about">
@@ -20,14 +24,19 @@ function Header() {
                 <Link to="/contact">
                     <Button>Contact</Button>
                 </Link>
+                {/* spushowac buttony w prawy róg */ }
+                <div className=''>
+
+                    <Link to="/signup">
+                        <Button>Sign up</Button>
+                    </Link>
+                    
+                    <Link to ="/login">
+                        <Button variant="secondary">Sign in</Button>
+                    </Link>
+
+                </div>
                 
-                <Link to="/signup">
-                    <Button>Sign up</Button>
-                </Link>
-                
-                <Link to ="/login">
-                    <Button variant="secondary">Sign in</Button>
-                </Link>
             </nav>
         </header>
     )
