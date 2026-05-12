@@ -4,7 +4,7 @@ function Homepage() {
     return (
         <div className='h-screen flex flex-col overflow-hidden'>
             <Header />
-            <main className='flex-1 overflow-y-scroll snap-y snap-proximity scroll-smooth'>
+            <main className='flex-1 overflow-y-scroll snap-y snap-mandatory scroll-smooth'>
                 
                 <section className='h-full snap-start bg-pink-500'>Hero</section>
                 <section className='h-full snap-start bg-grey'>Functions</section>

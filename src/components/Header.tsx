@@ -4,11 +4,11 @@ import Button from './Button'
 function Header() {
     return (
         <header className='flex items-center justify-between px-6 py-4'>
-            <nav className='flex items-center gap-4'>
-                <Link to="/">
+            <Link className="text-xl font-medium" to="/">
                     uMetryk
-                </Link>
-
+            </Link>
+            <nav className='flex items-center gap-4'>
+                
                 <Link to="/">
                     <Button>Home</Button>
                 </Link>
@@ -25,7 +25,7 @@ function Header() {
                     <Button>Contact</Button>
                 </Link>
                 {/* spushowac buttony w prawy róg */ }
-                <div className=''>
+                <div className='flex items-center gap-4'>
 
                     <Link to="/signup">
                         <Button>Sign up</Button>
