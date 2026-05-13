@@ -5,7 +5,7 @@ function Header() {
     return (
         <header className='flex items-center justify-between px-6 py-4'>
             <Link className="text-xl font-medium" to="/">
-                    uMetryk
+                    Metryk
             </Link>
             <nav className='flex items-center gap-4'>
                 

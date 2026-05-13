@@ -9,7 +9,7 @@ function Homepage() {
                 <section className='h-full snap-start bg-pink-500'>Hero</section>
                 <section className='h-full snap-start bg-grey'>Functions</section>
                 <section className='h-full snap-start bg-zinc-900 text-white'>About</section>
-    
+            
             </main>
         </div>
     )
