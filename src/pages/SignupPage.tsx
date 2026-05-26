@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import FormInput from '../components/AuthInput'
-import About from './About'
 import AuthButton from '../components/AuthButtons'
 
 
