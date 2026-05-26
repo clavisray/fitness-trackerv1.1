@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom'
+import FormInput from '../components/AuthInput'
+import About from './About'
+import AuthButton from '../components/AuthButtons'
 
 
 function SignupPage() {
@@ -15,52 +18,34 @@ function SignupPage() {
                     Utwórz konto
                 </h2>
                 
-                <form className="flex flex-col gap-4">
-                    <label className="block text-sm font-medium">Imie</label>
-                        <input type="imie" 
-                        placeholder='Imie' 
-                        className="w-full rounded-xl border border-zinc-300 px-4 py-2 outline-none focus:border-black" />
+                <form className="flex flex-col gap-4 mb-4">
+                    <FormInput label='Imię' id="firstName" type="text" placeholder='Imię' />
 
-                    <label className="block text-sm font-medium">Nazwisko</label>
-                        <input type="nazwisko" 
-                        placeholder="Nazwisko" 
-                        className="w-full rounded-xl border border-zinc-300 px-4 py-2 outline-none focus:border-black"/>
+                    <FormInput label='Nazwisko' id="lastName" type="text" placeholder='Nazwisko' />
 
-                    <label className="block text-sm font-medium">E-mail</label>
-                        <input type="email" 
-                        id="email" 
-                        placeholder='Email' 
-                        className="w-full rounded-xl border border-zinc-300 px-4 py-2 outline-none focus:border-black"/>
+                    <FormInput label='E-mail' id="email" type="email" placeholder='E-mail' />
 
-                    <label className="block text-sm font-medium">Hasło</label>
-                        <input type="password" 
-                        id="password" 
-                        placeholder='Hasło' 
-                        className="w-full rounded-xl border border-zinc-300 px-4 py-2 outline-none focus:border-black"/>
-                    
-                    <label htmlFor='checkbox' className='checkbox-label'> 
-                    <input type="checkbox" id="checkbox" />
-                    <span> Tak, chcę otrzymywać zniżki, oferty lojalnościowe i inne informacje.</span> 
+                    <FormInput label='Hasło' id="password" type="password" placeholder='Hasło' />
+
+                    <label className="flex items-start gap-2 text-sm text-zinc-600">
+                      <input type="checkbox" className='mt-1'></input>
+                      <span> Tak, chcę otrzymywać zniżki, oferty lojalnościowe i inne informacje.</span> 
                     </label>
+                
+                <AuthButton type="submit">Utwórz konto</AuthButton>
                 </form>
 
-                <button 
-                    type = "submit" 
-                    className="mb-3 mt-2 w-full rounded-xl bg-black py-3 text-white font-medium transition hover:bg-zinc-800 cursor-pointer">Utwórz konto
-                </button>
-                <button className="mb-6 w-full rounded-xl bg-white py-3 text-black outline-solid transition hover:bg-zinc-100 cursor-pointer">Zaloguj się kontem Google</button>
+                <AuthButton variant='secondary'>Zaloguj się kontem Google</AuthButton>
 
-                <p className="mt-6 text-center text-sm text-zinc-600">
+                <p className="mt-4 text-center text-sm text-zinc-600">
                     Masz już konto?{" "}
-                    <Link to = "/login">
-                        <button className="font-medium text-black underline cursor-pointer">
+                    <Link to = "/login" className="font-medium text-black underline cursor-pointer">
                             Zaloguj się
-                        </button>
                     </Link>
                 </p>
 
                 <p className="mt-4 text-center text-xs text-zinc-500">
-                Tworząc konto, akceptujesz Regulamin oraz Politykę prywatności.
+                Tworząc konto akceptujesz <Link to ="/about" className='text-black cursor-pointer'>Regulamin</Link> oraz Politykę prywatności.
                 </p>
             </section>
         </main>

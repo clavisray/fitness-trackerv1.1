@@ -1,6 +1,5 @@
 type ButtonVariant = "primary" | "secondary" | "third";
 
-
 type ButtonProps = {
     children: React.ReactNode;
     onClick?: () => void;
@@ -14,18 +13,12 @@ const variantClasses = {
     third: "bg-red-600 text-white hover:bg-red-700"
 }
 
-function Button({ 
-    children, 
-    onClick, 
-    className = "", 
-    variant = "primary",
-}: ButtonProps) {
+function Button({ children, onClick, className = "", variant = "primary" }: ButtonProps) {
     return (
-    <button 
-        onClick={onClick}
-        className={`rounded-xl px-4 py-2 font-medium transition ${variantClasses[variant]} ${className}`}
-        >
-            {children}
+        <button onClick={onClick}
+            className={`rounded-xl px-4 py-2 font-medium transition ${variantClasses[variant]} ${className}`}
+            >
+                {children}
         </button>
     );
 }
