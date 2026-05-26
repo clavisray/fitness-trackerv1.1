@@ -27,7 +27,7 @@ function SignupPage() {
                     <FormInput label='Hasło' id="password" type="password" placeholder='Hasło' />
 
                     <label className="flex items-start gap-2 text-sm text-zinc-600">
-                      <input type="checkbox" className='mt-1'></input>
+                      <input type="checkbox" className='mt-1 accent-black'></input>
                       <span> Tak, chcę otrzymywać zniżki, oferty lojalnościowe i inne informacje.</span> 
                     </label>
                 
@@ -38,13 +38,13 @@ function SignupPage() {
 
                 <p className="mt-4 text-center text-sm text-zinc-600">
                     Masz już konto?{" "}
-                    <Link to = "/login" className="font-medium text-black underline cursor-pointer">
+                    <Link to = "/login" className="font-medium text-black underline cursor-pointer hover:no-underline">
                             Zaloguj się
                     </Link>
                 </p>
 
                 <p className="mt-4 text-center text-xs text-zinc-500">
-                Tworząc konto akceptujesz <Link to ="/about" className='text-black cursor-pointer'>Regulamin</Link> oraz Politykę prywatności.
+                Tworząc konto akceptujesz <Link to ="/about" className='text-black underline cursor-pointer hover:no-underline'>Regulamin</Link> oraz Politykę prywatności.
                 </p>
             </section>
         </main>
