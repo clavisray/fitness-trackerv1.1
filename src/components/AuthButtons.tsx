@@ -1,10 +1,4 @@
-type ButtonVariant = "primary" | "secondary" | "third";
-
-type AuthButtonProps = {
-    type?: "button" | "submit" | "reset";
-    children: React.ReactNode;
-    variant?: ButtonVariant;
-}
+import type { AuthButtonProps } from "../types/ui";
 
 const variantClasses = {
     primary: "w-full rounded-xl bg-black py-3 text-white font-medium transition hover:bg-zinc-800 cursor-pointer",
