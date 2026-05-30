@@ -5,4 +5,5 @@ export type AuthButtonProps = {
     children: React.ReactNode;
     variant?: ButtonVariant;
     className?: string;
+    onClick?: () => void;
 }

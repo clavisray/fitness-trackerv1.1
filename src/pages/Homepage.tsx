@@ -1,7 +1,11 @@
 import Header from '../components/Header'
 import HeroButton from '../components/HeroButton'
+import FormInput from '../components/AuthInput'
+import { useState } from 'react'
 
 function Homepage() {
+    const [email, setEmail] = useState("")
+
     return (
         <div className='h-screen flex flex-col overflow-hidden'>
             <Header />
@@ -22,13 +26,13 @@ function Homepage() {
 
                         <div className='flex w-full flex-col gap-3
                         md:gap-4 md:flex-row'>
+                            <FormInput id="email" type="email" placeholder='Wprowadź swój adres mailowy' className=''
+                            value={email} onChange={(e) => setEmail(e.target.value)} />
                             <HeroButton variant='primary' className='w-full md:w-auto md:px-8'>
                                 Join now
                             </HeroButton>
 
-                            <HeroButton variant='secondary' className='w-full md:w-auto md:px-8'>
-                                Learn more
-                            </HeroButton>
+                            
                         </div>
 
                     </div>
@@ -37,7 +41,13 @@ function Homepage() {
 
                 </section>
                 <section className='h-full snap-start bg-grey'>Functions</section>
-                <section className='h-full snap-start bg-zinc-900 text-white'>About</section>
+                <section className='h-full snap-start bg-zinc-900 text-white'>
+                    About
+                    <HeroButton variant='secondary' className='w-full md:w-auto md:px-8'>
+                                Learn more
+                    </HeroButton>
+
+                </section>
             
             </main>
         </div>

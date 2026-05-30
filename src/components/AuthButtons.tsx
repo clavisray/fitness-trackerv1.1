@@ -7,9 +7,9 @@ const variantClasses = {
 }
 
 
-function AuthButton({ type = "button", children, variant = "primary" }: AuthButtonProps ) {
+function AuthButton({ type = "button", children, variant = "primary", onClick }: AuthButtonProps ) {
     return (
-        <button type={type} className={variantClasses[variant]}>
+        <button type={type} className={variantClasses[variant]} onClick={onClick}>
             {children}
         </button>
     )
