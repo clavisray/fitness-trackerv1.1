@@ -3,36 +3,25 @@ import Button from './Button'
 
 function Header() {
     return (
-        <header className='flex items-center justify-between px-6 py-4'>
-            <Link className="text-xl font-medium" to="/">
-                    Metryk
-            </Link>
+        <header className="mx-3 flex items-center justify-between px-6 py-4">            
+        <Link className="text-xl font-medium" to="/">Metryk</Link>
             <nav className='flex items-center gap-4'>
                 
                 <Link to="/">
-                    <Button>Home</Button>
-                </Link>
-
-                <Link to="/download">
-                    <Button>Download</Button>
+                    <Button variant='primary'>Home</Button>
                 </Link>
                 
                 <Link to="/about">
-                    <Button>About</Button>
+                    <Button variant='primary'>About us</Button>
                 </Link>
                 
                 <Link to="/contact">
-                    <Button>Contact</Button>
+                    <Button variant='primary'>Support</Button>
                 </Link>
-                {/* spushowac buttony w prawy róg */ }
                 <div className='flex items-center gap-4'>
-
-                    <Link to="/signup">
-                        <Button>Sign up</Button>
-                    </Link>
                     
                     <Link to ="/login">
-                        <Button variant="secondary">Sign in</Button>
+                        <Button variant="third">Get started</Button>
                     </Link>
 
                 </div>

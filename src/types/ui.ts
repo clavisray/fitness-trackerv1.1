@@ -6,4 +6,11 @@ export type AuthButtonProps = {
     variant?: ButtonVariant;
     className?: string;
     onClick?: () => void;
+    icon?: React.ReactNode;
+}
+
+export type FormErrors = {
+    email?: string;
+    password?: string;
+    general?: string;
 }

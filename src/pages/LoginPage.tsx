@@ -1,29 +1,41 @@
-import { Link, useNavigate } from "react-router-dom"
-import FormInput from '../components/AuthInput'
-import AuthButton from "../components/AuthButtons"
-import { useState, type FormEvent } from 'react'
-import { supabase } from '../lib/supabaseClient'
+import { Link, useNavigate } from "react-router-dom";
+import FormInput from '../components/AuthInput';
+import AuthButton from "../components/AuthButtons";
+import { useState, type FormEvent } from 'react';
+import { supabase } from '../lib/supabaseClient';
+import { FcGoogle } from "react-icons/fc";
+
 
 function LoginPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("");
+    const [errorMsg, setErrorsMsg] = useState("");
+    const [inputError, setInputError] = useState(false);
 
     const navigate = useNavigate();
 
     async function handleLogin(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setErrorsMsg("");
+        setInputError(false);
 
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email,
-            password
-        });
+        if (!email || !password) {
+            setErrorsMsg("Wypełnij wszystkie pola");
+            setInputError(true);
+            return;
+        }
+
+        const { data, error } = await supabase.auth.signInWithPassword({ email,password });
 
         if (error) {
+            setErrorsMsg("Niepoprawny email lub hasło")
+            setInputError(true);
             console.log("Błąd", error.message)
             return;
         }
 
         console.log("Zalogowano użytkownika", data)
+        setInputError(false);
         navigate("/dashboard");
     }
 
@@ -38,17 +50,23 @@ function LoginPage() {
                     Zaloguj się
                 </h2>
                 
-                <form onSubmit={handleLogin} className="flex flex-col gap-4 mb-4">
+                <form onSubmit={handleLogin} noValidate className="flex flex-col gap-4 mb-4">
                     <FormInput label="E-mail" id="email" type="email" placeholder="E-mail" 
-                    value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    value={email} onChange={(e) => setEmail(e.target.value)}
+                    hasError={inputError}/>
 
                     <FormInput label='Hasło' id="password" type="password" placeholder='Hasło' 
-                    value={password} onChange={(p) => setPassword(p.target.value)}/>
+                    value={password} onChange={(p) => setPassword(p.target.value)}
+                    hasError={inputError}/>
+
+                    {errorMsg && <p className='text-sm text-red-500'>{errorMsg}</p>}
 
                     <AuthButton type="submit" variant="primary">Zaloguj się</AuthButton>
                     
                 </form>
-                <AuthButton variant="secondary">Zaloguj się kontem Google</AuthButton>
+                <AuthButton variant="third" className="" icon={<FcGoogle size={20}/>}>Kontynuuj przy użyciu konta Google</AuthButton>
+
+                
 
                 <p className="mt-4 text-center text-sm text-zinc-600">
                     Nie masz konta?{" "}
