@@ -4,6 +4,7 @@ import AuthButton from "../components/AuthButtons";
 import { useState, type FormEvent } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { FcGoogle } from "react-icons/fc";
+import { MdErrorOutline } from 'react-icons/md'
 
 
 function LoginPage() {
@@ -39,16 +40,29 @@ function LoginPage() {
         navigate("/dashboard");
     }
 
+    async function handleGoogleLogin() {
+        console.log("klikGoogle")
+        const { error } =  await supabase.auth.signInWithOAuth({
+        provider: "google",
+    })};
+
     return (
         <main className="min-h-screen bg-zinc-100 flex items-center justify-center px-4">
             <section className="w-full max-w-md rounded-3xl bg-white p-8 shadow-xl">
                 <Link to = "/" className="mb-6 flex h-10 w-10 items-center justify-center rounded-2xl transition hover:bg-zinc-100 cursor-pointer">
                     <span className="material-symbols-outlined">arrow_back</span>
                 </Link>
+                
+                {errorMsg && <p className={`rounded-md border px-4 py-4 py- w-full mb-5 border-red-500 flex items-row gap-2 items-center`}>
+                        <MdErrorOutline size={20}/>
+                        Nieprawidłowa nazwa użytkownika lub hasło
+                    </p>}
+
 
                 <h2 className="mb-6 text-center text-2xl font-bold">
                     Zaloguj się
                 </h2>
+
                 
                 <form onSubmit={handleLogin} noValidate className="flex flex-col gap-4 mb-4">
                     <FormInput label="E-mail" id="email" type="email" placeholder="E-mail" 
@@ -64,7 +78,7 @@ function LoginPage() {
                     <AuthButton type="submit" variant="primary">Zaloguj się</AuthButton>
                     
                 </form>
-                <AuthButton variant="third" className="" icon={<FcGoogle size={20}/>}>Kontynuuj przy użyciu konta Google</AuthButton>
+                <AuthButton type="button" variant="third" className="" onClick={handleGoogleLogin} icon={<FcGoogle size={20} />}>Kontynuuj przy użyciu konta Google</AuthButton>
 
                 
 

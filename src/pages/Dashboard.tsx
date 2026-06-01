@@ -7,13 +7,17 @@ function Dashboard() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        supabase.auth.getSession().then(({ data }) => {
+        async function checkSession() {
+            const { data } = await supabase.auth.getSession();
+
             if (!data.session) {
-                navigate("/login");
+            navigate("/login");
             }
-        });
-    }, []);
-    
+        }
+
+        checkSession();
+        }, [navigate]);
+        
     return (
         <div>
             
