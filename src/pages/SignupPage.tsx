@@ -8,12 +8,62 @@ import type { FormEvent } from 'react'
 
 function SignupPage() {
     const [name, setName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMsg, setErrorsMsg] = useState("");
+    const [errors, setErrors] = useState({
+        name: "",
+        email: "",
+        password: "",
+    });
+    const [inputError, setInputError] = useState(false);
+    const [marketingConsents, setMarketingConsents] = useState(false);
+
+
+    const isPasswordLongEnough = password.length >= 8;
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isNameLongEnough = name.trim().length >= 2 && name.trim().length <= 20;
+
+    function validateForm() {
+        const newErrors = {
+            name: "",
+            email: "",
+            password: "",
+        };
+
+        if (!isNameLongEnough) {
+            newErrors.name = "Imię musi mieć od 2 do 20 znaków.";
+        }
+
+        if (!isEmailValid) {
+            newErrors.email = "Podaj poprawny adres e-mail.";
+        }
+
+        if (!isPasswordLongEnough) {
+            newErrors.password = "Hasło musi mieć minimum 8 znaków.";
+        }
+
+        setErrors(newErrors);
+
+        return !newErrors.name && !newErrors.email && !newErrors.password;
+    }
+
 
     async function handleSignup(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setInputError(false);
+        setErrorsMsg("");
+
+        const isValid = validateForm();
+        if (!isValid) {
+            return;
+        }
+
+        if (!email || !password || !name) {
+            setErrorsMsg("Wypełnij wszystkie pola");
+            setInputError(true);
+            return;
+        }
 
         const { data, error } = await supabase.auth.signUp({
             email,
@@ -22,11 +72,15 @@ function SignupPage() {
 
         if(error) {
             console.log("Błąd: ", error.message);
+            setInputError(true);
             return;
         }
 
         console.log("Utworzono konto: ", data);
+        setErrorsMsg("");
     }
+
+
 
     return (
         <main className="min-h-screen bg-zinc-100 flex items-center justify-center px-4">
@@ -41,19 +95,29 @@ function SignupPage() {
                 
                 <form onSubmit={handleSignup} className="flex flex-col gap-4 mb-4">
                     <FormInput label='Imię' id="firstName" type="text" placeholder='Imię'
-                    value={name} onChange={(n) => setName(n.target.value)} />
-
-                    <FormInput label='Nazwisko' id="lastName" type="text" placeholder='Nazwisko' 
-                    value={lastName} onChange={(ln) => setLastName(ln.target.value)}/>
+                    value={name} onChange={(n) => setName(n.target.value)} hasError={inputError}/>
+                    {errorMsg && <p className={`-mt-3 text-xs ${isNameLongEnough ? "text-green-600" : "text-red-600"}`}>
+                        {errorMsg}
+                    </p>}
 
                     <FormInput label='E-mail' id="email" type="email" placeholder='E-mail' 
-                    value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    value={email} onChange={(e) => setEmail(e.target.value)} hasError={inputError}/>
+                    {errorMsg && <p className={`-mt-3 text-xs ${isEmailValid ? "text-green-600" : "text-red-600"}`}>
+                        {errorMsg}
+                    </p>}
 
                     <FormInput label='Hasło' id="password" type="password" placeholder='Hasło' 
-                    value={password} onChange={(p) => setPassword(p.target.value)}/>
+                    value={password} onChange={(p) => setPassword(p.target.value)} hasError={inputError}/>
+
+                    {errorMsg && <p className={`-mt-3 text-xs ${isPasswordLongEnough ? "text-green-600" : "text-red-600"}`}>
+                        {errorMsg}
+                    </p>}
+
+                    {errorMsg && <p className='text-sm text-red-500'>{errorMsg}</p>}
 
                     <label className="flex items-start gap-2 text-sm text-zinc-600">
-                      <input type="checkbox" className='mt-1 accent-black'></input>
+                      <input type="checkbox" className='mt-1 accent-black' 
+                      checked={marketingConsents} onChange={(e) => setMarketingConsents(e.target.checked)} />
 
                       {/* add value for span below */}
                       <span> Tak, chcę otrzymywać zniżki, oferty lojalnościowe i inne informacje.</span> 
@@ -61,9 +125,6 @@ function SignupPage() {
                 
                 <AuthButton type="submit">Utwórz konto</AuthButton>
                 </form>
-
-                <AuthButton variant='secondary'>Zaloguj się kontem Google</AuthButton>
-
                 <p className="mt-4 text-center text-sm text-zinc-600">
                     Masz już konto?{" "}
                     <Link to = "/login" className="font-medium text-black underline cursor-pointer hover:no-underline">

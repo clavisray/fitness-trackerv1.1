@@ -13,9 +13,13 @@ function Dashboard() {
             if (!data.session) {
             navigate("/login");
             }
+
+            console.log(data);
+            
         }
 
         checkSession();
+        
         }, [navigate]);
         
     return (
