@@ -1,9 +1,11 @@
 export type ButtonVariant = "primary" | "secondary" | "third";
 
-export type AuthButtonProps = {
+export type DashButtonVariants = "default" | "defaultClicked" | "third";
+
+export type AuthButtonProps<V extends string = ButtonVariant> = {
     type?: "button" | "submit" | "reset";
     children: React.ReactNode;
-    variant?: ButtonVariant;
+    variant?: V;
     className?: string;
     onClick?: () => void;
     icon?: React.ReactNode;

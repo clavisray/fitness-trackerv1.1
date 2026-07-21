@@ -16,7 +16,7 @@ const variantClasses = {
 function Button({ children, onClick, className = "", variant = "primary" }: ButtonProps) {
     return (
         <button onClick={onClick}
-            className={`rounded-xl px-4 py-2 font-medium transition ${variantClasses[variant]} ${className}`}
+            className={`rounded-xl px-4 py-2 font-medium transition ${variantClasses[variant]} goasd}`}
             >
                 {children}
         </button>

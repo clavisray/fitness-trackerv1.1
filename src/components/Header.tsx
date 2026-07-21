@@ -7,7 +7,7 @@ function Header() {
         <Link className="text-xl font-medium" to="/">Metryk</Link>
             <nav className='flex items-center gap-4'>
                 
-                <Link to="/">
+                <Link to="/"> 
                     <Button variant='primary'>Home</Button>
                 </Link>
                 
