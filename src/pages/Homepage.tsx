@@ -2,6 +2,10 @@ import Header from '../components/Header'
 import HeroButton from '../components/HeroButton'
 import FormInput from '../components/AuthInput'
 import { useState } from 'react'
+import iphone from '../assets/iphone.png'
+import applepl from '../assets/download-apple-pl.svg'
+import googlepl from '../assets/download-google-pl.png'
+import { Link } from 'react-router-dom'
 
 function Homepage() {
     const [email, setEmail] = useState("")
@@ -37,24 +41,61 @@ function Homepage() {
                                     </div>
 
                                     <HeroButton variant="primary" className="w-full md:w-auto md:px-8">
-                                        Join now
+                                        Dołącz teraz
                                     </HeroButton>
                                 </div>
                             </div>
 
                         {/* PRAWA STRONA */}
                         <div className="flex justify-center md:justify-end">
-                            screen apki
+                            <img src={iphone} alt="iphonescr" className='w-75 h-auto'></img>
                         </div>
 
                         </div>
                     </div>
                 </section>
-                <section className='h-full snap-start bg-gray-100'>Functions</section>
+
+                {/* DOWNLOAD */}
+                <section className="h-full snap-start grid grid-cols-5 items-center px-10">
+
+                    {/* LEWA STRONA */}
+                    <div className='col-span-3'>
+                    
+                        <p className='text-sm font-semibold uppercase tracking-[0.2em] text-indigo-600'>
+                            POBIERZ APLIKACJĘ
+                        </p>
+                        
+                        <h2 className='mt-6 text-5xl font-bold'>
+                            Kiedyś, czy dzisiaj?
+                        </h2>
+                        
+                        <p className="mt-2 max-w-xl text-base text-zinc-600 md:text-lg">
+                            Zabierz swój dziennik treningowy wszędzie tam, gdzie trenujesz. Zapisuj wyniki, śledź postępy i miej dostęp do wszystkich danych w jednym miejscu.
+                        </p>
+
+                        <div className="mt-8 flex gap-4">
+                            <img src={applepl} alt="Pobierz w App Store" className="h-14 w-auto" />
+                            <img src={googlepl} alt="Pobierz z Google Play" className="h-14 w-auto" />
+                        </div>
+
+                        <ul className='mt-8'>
+                            <li>✓ Synchronizacja z kontem</li>
+                            <li>✓ Dostęp na iOS i Androidzie</li>
+                            <li>✓ Wszystkie treningi w jednym miejscu</li>
+                        </ul>
+                    </div>
+
+                    {/* PRAWA STRONA */}
+                    <div className='col-span-2'>
+
+                    </div>
+                </section>
+
+                {/*ABOUT TERMS AND CONDITIONS */}
                 <section className='h-full snap-start bg-zinc-900 text-white'>
                     About
                     <HeroButton variant='secondary' className='w-full md:w-auto md:px-8'>
-                                Learn more
+                                <Link to="/about"> Learn more</Link>
                     </HeroButton>
 
                 </section>
