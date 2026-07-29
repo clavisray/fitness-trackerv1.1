@@ -7,9 +7,9 @@ const variantClasses: Record<ButtonVariant, string> = {
 }
 
 
-function AuthButton({ type = "button", children, variant = "primary", onClick, className="", icon}: AuthButtonProps ) {
+function AuthButton({ type = "button", children, variant = "primary", onClick, className="", icon, disabled }: AuthButtonProps ) {
     return (
-        <button type={type} className={`${variantClasses[variant]} ${className}`} onClick={onClick}>
+        <button type={type} className={`${variantClasses[variant]} ${className}`} onClick={onClick} disabled={disabled}>
             <span className="relative flex items-center justify-center">
                 <span className="absolute left-4">{icon}</span>
                 {children}

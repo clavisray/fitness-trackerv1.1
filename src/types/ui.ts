@@ -9,6 +9,7 @@ export type AuthButtonProps<V extends string = ButtonVariant> = {
     className?: string;
     onClick?: () => void;
     icon?: React.ReactNode;
+    disabled?: boolean;
 }
 
 export type FormErrors = {
