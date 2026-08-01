@@ -21,10 +21,10 @@ function SignupPage() {
     });
 
     
-
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const isPasswordLongEnough = password.length >= 8;
-    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isEmailValid = emailRegex.test(email);
     const isNameLongEnough = name.trim().length >= 2 && name.trim().length <= 20;
 
     function validateForm() {
@@ -52,10 +52,19 @@ function SignupPage() {
     }
 
     function clearError(field: "name" | "email" | "password") {
-        setErrors((prev) => ({
-            ...prev,
-            [field]: "",
-        }));
+        
+        setErrors((prev) => {
+            const updated = {
+                ...prev,
+                [field]: "",
+            };
+
+            if (!updated.name && !updated.email && !updated.password) {
+                setErrorsMsg("");
+            }
+
+            return updated;
+        });
     }
 
 
@@ -93,14 +102,15 @@ function SignupPage() {
                 return;
             }
         
-        console.log("Utworzono konto: ", data);
-        setErrorsMsg("");
+            console.log("Utworzono konto: ", data);
+            setErrorsMsg("");
+
         } finally {
             setIsLoading(false);
         }
     }
 
-    console.log(isMarketingConsent);
+    
 
     return (
         <main className="min-h-screen bg-zinc-100 flex items-center justify-center px-4">
@@ -120,11 +130,18 @@ function SignupPage() {
                     Utwórz konto
                 </h2>
                 
-                <form onSubmit={handleSignup} className="flex flex-col gap-4 mb-4">
+                <form onSubmit={handleSignup} noValidate className="flex flex-col gap-4 mb-4">
 
                     <FormInput label='Imię' id="firstName" type="text" placeholder='Imię'
                     value={name} onChange={
-                        (n) => {setName(n.target.value); clearError("name");
+                        (n) => { const value = n.target.value;
+
+                            setName(value);
+
+                            if (value.trim().length >= 2 && value.trim().length <= 20) {
+                                clearError("name");
+                            }
+
                     }}
 
                     hasError={Boolean(errors.name)}/>
@@ -132,36 +149,51 @@ function SignupPage() {
                     {errors.name && (
                     <p className='-mt-3 text-xs text-red-600'>
                         {errors.name}
-
                     </p>
                 )}
 
                     <FormInput label='E-mail' id="email" type="email" placeholder='E-mail' 
                     value={email} onChange={
-                        (e) => {setEmail(e.target.value); clearError("email");}} 
-                        
+                        (e) => { const value = e.target.value;
+
+                            setEmail(value); 
+
+                            if (emailRegex.test(value)) {
+                                clearError("email");
+                            }
+                        }}
+
                         hasError={Boolean(errors.email)}/>
 
                     {errors.email && (
                         <p className='-mt-3 text-xs text-red-600'>
-                        {errors.email}
-                    </p>
+                            {errors.email}
+                        </p>
                 )}
 
                     <FormInput label='Hasło' id="password" type="password" placeholder='Hasło' 
-                    value={password} onChange={(p) => {setPassword(p.target.value); clearError("password")}} hasError={Boolean(errors.password)}/>
+                    value={password} onChange={(p) => { const value = p.target.value;
+                        setPassword(value); 
+
+                        if (value.length >= 8) {
+                            clearError("password")
+                        }
+                    }} 
+                        
+                        hasError={Boolean(errors.password)}/>
 
                     {errors.password && (
                         <p className='-mt-3 text-xs text-red-600'>
-                        {errors.password}
-                    </p>
+                            {errors.password}
+                        </p>
                     )}
 
                     <label className="flex items-start gap-2 text-sm text-zinc-600">
                       <input type="checkbox" className='mt-1 accent-black' 
-                      checked={isMarketingConsent} onChange={(e) => setMarketingConsents(e.target.checked)} />
+                        checked={isMarketingConsent} onChange={(e) => {setMarketingConsents(e.target.checked); 
+                        console.log(e.target.checked);
+                      }} />
 
-                      {/* add value for span below */}
                       <span> Tak, chcę otrzymywać zniżki, oferty lojalnościowe i inne informacje.</span> 
                     </label>
                 
@@ -184,4 +216,4 @@ function SignupPage() {
     )
 }
 
-export default SignupPage
+export default SignupPage;

@@ -11,18 +11,45 @@ function LoginPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("");
     const [errorMsg, setErrorsMsg] = useState("");
-    const [inputError, setInputError] = useState(false);
+
+
+    const [errors, setErrors] = useState({
+        email: "",
+        password: "",
+    });
 
     const navigate = useNavigate();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function clearError(field: "email" | "password") {
+
+        setErrors((prev) => {
+            const updated = {
+                ...prev,
+                [field]: "",
+            };
+
+            if (!updated.email && !updated.password) {
+                setErrorsMsg("");
+            }
+
+            return updated;
+        });
+    }
 
     async function handleLogin(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setErrorsMsg("");
-        setInputError(false);
 
         if (!email || !password) {
+
+            setErrors({
+                email: email ? "" : "Wpisz adres e-mail.",
+                password: password? "" : "Wpisz hasło.",
+            })
+
             setErrorsMsg("Wypełnij wszystkie pola");
-            setInputError(true);
+
             return;
         }
 
@@ -30,13 +57,12 @@ function LoginPage() {
 
         if (error) {
             setErrorsMsg("Niepoprawny email lub hasło")
-            setInputError(true);
             console.log("Błąd", error.message)
             return;
         }
 
         console.log("Zalogowano użytkownika", data)
-        setInputError(false);
+        setErrorsMsg("");
         navigate("/dashboard");
     }
 
@@ -53,10 +79,12 @@ function LoginPage() {
                     <span className="material-symbols-outlined">arrow_back</span>
                 </Link>
                 
-                {errorMsg && <p className={`rounded-md border px-4 py-4 py- w-full mb-5 border-red-500 flex items-row gap-2 items-center`}>
-                        <MdErrorOutline size={20}/>
-                        Nieprawidłowa nazwa użytkownika lub hasło
-                    </p>}
+                {errorMsg && 
+                    <p className={`rounded-md border px-4 py-4 w-full mb-5 border-red-500 flex items-row gap-2 items-center`}>
+                        <MdErrorOutline size={20} />
+                        {errorMsg}
+                    </p>
+                }
 
 
                 <h2 className="mb-6 text-center text-2xl font-bold">
@@ -65,22 +93,51 @@ function LoginPage() {
 
                 
                 <form onSubmit={handleLogin} noValidate className="flex flex-col gap-4 mb-4">
+
                     <FormInput label="E-mail" id="email" type="email" placeholder="E-mail" 
-                    value={email} onChange={(e) => setEmail(e.target.value)}
-                    hasError={inputError}/>
+                    value={email} onChange={
+                        (e) => { const value = e.target.value;
+                            
+                            setEmail(value);
 
-                    <FormInput label='Hasło' id="password" type="password" placeholder='Hasło' 
-                    value={password} onChange={(p) => setPassword(p.target.value)}
-                    hasError={inputError}/>
+                            if (emailRegex.test(value)) {
+                                clearError("email");
+                            }
 
-                    {errorMsg && <p className='text-sm text-red-500'>{errorMsg}</p>}
+                        }}
+
+                    hasError={Boolean(errors.email)}/>
+
+                    {errors.email && (
+                        <p className='-mt-3 text-xs text-red-600'>
+                            {errors.email}
+                        </p>
+                    )}
+
+                    <FormInput label='Hasło' id="password" type="password" placeholder='Hasło' value={password} 
+                    onChange={
+                        (p) => { const value = p.target.value;
+                            
+                            setPassword(value)
+
+                            if (value) {
+                                clearError("password")
+                            }
+
+                        }}
+                    hasError={Boolean(errors.password)}/>
+
+                    {errors.password && (
+                        <p className='-mt-3 text-xs text-red-600'>
+                            {errors.password}
+                        </p>
+                    )}
 
                     <AuthButton type="submit" variant="primary">Zaloguj się</AuthButton>
                     
                 </form>
-                <AuthButton type="button" variant="third" className="" onClick={handleGoogleLogin} icon={<FcGoogle size={20} />}>Kontynuuj przy użyciu konta Google</AuthButton>
-
                 
+                <AuthButton type="button" variant="third" className="" onClick={handleGoogleLogin} icon={<FcGoogle size={20} />}>Kontynuuj przy użyciu konta Google</AuthButton>
 
                 <p className="mt-4 text-center text-sm text-zinc-600">
                     Nie masz konta?{" "}
@@ -90,11 +147,11 @@ function LoginPage() {
                 </p>
 
                 <p className="mt-4 text-center text-xs text-zinc-500">
-                Tworząc konto akceptujesz <Link to ="/about" className='text-black underline cursor-pointer hover:no-underline'>Regulamin</Link> oraz Politykę prywatności.
+                Kontynuując, akceptujesz nasze <Link to ="/about" className='text-black underline cursor-pointer hover:no-underline'>Warunki korzystania z usługi</Link> oraz <Link to="/about" className="text-black underline cursor-pointer hover:no-underline">Politykę prywatności.</Link>
                 </p>
             </section>
         </main>
     )
 }
 
-export default LoginPage
+export default LoginPage;
