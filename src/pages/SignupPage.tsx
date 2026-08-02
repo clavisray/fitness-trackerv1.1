@@ -5,11 +5,17 @@ import { supabase } from '../lib/supabaseClient'
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { MdErrorOutline } from 'react-icons/md'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 
 function SignupPage() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const initalEmail = location.state?.email ?? "";
+
+
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState(initalEmail);
     const [password, setPassword] = useState("");
     const [isMarketingConsent, setMarketingConsents] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -104,6 +110,11 @@ function SignupPage() {
         
             console.log("Utworzono konto: ", data);
             setErrorsMsg("");
+            navigate("/signup-success", {
+                state: {
+                    fromSignup: true,
+                },
+            });
 
         } finally {
             setIsLoading(false);

@@ -6,6 +6,7 @@ import DownloadPage from "./pages/DownloadPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Dashboard from './pages/Dashboard'
+import SignupSuccess from "./pages/SignupSuccess";
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/settings" element={<Dashboard />} />
-          
+          <Route path="/signup-success" element={<SignupSuccess />} />
 
         </Routes>
       </BrowserRouter>

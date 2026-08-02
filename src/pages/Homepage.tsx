@@ -5,10 +5,17 @@ import { useState } from 'react'
 import iphone from '../assets/iphone.png'
 import applepl from '../assets/download-apple-pl.svg'
 import googlepl from '../assets/download-google-pl.png'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 function Homepage() {
     const [email, setEmail] = useState("")
+    const navigate = useNavigate();
+
+    function handleJoin() {
+        navigate("/signup", {
+            state: { email },
+        });
+    }
 
     return (
         <div className="h-screen overflow-hidden">
@@ -40,7 +47,8 @@ function Homepage() {
                                         />
                                     </div>
 
-                                    <HeroButton variant="primary" className="w-full md:w-auto md:px-8">
+                                    <HeroButton variant="primary" className="w-full md:w-auto md:px-8"
+                                    onClick={handleJoin}>
                                         Dołącz teraz
                                     </HeroButton>
                                 </div>

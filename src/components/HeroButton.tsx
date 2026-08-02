@@ -8,9 +8,9 @@ const variantClasses = {
 
 const baseClasses = "relative overflow-hidden rounded-2xl px-4 py-2 font-medium transition cursor-pointer";
 
-function HeroButton({ type="button", children, variant = "primary", className="" }: AuthButtonProps){
+function HeroButton({ type="button", children, variant = "primary", className="", onClick }: AuthButtonProps){
     return (
-        <button type={type} className={`${baseClasses} ${variantClasses[variant]} ${className}`}>
+        <button type={type} onClick={onClick} className={`${baseClasses} ${variantClasses[variant]} ${className}`}>
             <span className="relative z-10">{children}</span>
         </button>
     )
