@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import Sidebar from "../../components/DashboardSidebar";
 import useAuth from '../../hooks/useAuth'
+import Topbar from "../../components/DashboardTopbar";
 
 
 function Dashboard() {
@@ -21,23 +22,15 @@ function Dashboard() {
     console.log(user?.user_metadata);
     console.log(user?.user_metadata.name);
     return (
-        <div className="flex flex-col h-screen">
-            <div className="grid flex-1 w-full h-full bg-zinc-200 overflow-hidden">
+        <div className="flex h-screen bg-zinc-50 p-2">
+            <Sidebar />
 
-                {/* lewa strona */}
-                <div className="flex flex-col items-start h-full">
-                    <Sidebar />
-                </div>
+            <div className="flex flex-1 flex-col p-3">
+                <Topbar />
 
-                {/* prawa strona */}
-                <div className="flex flex-col justify-center items-center w-full bg-zinc-1000">
-                    <p>test</p>
-                    <button onClick={logout}>
-                        wyloguj się
-                    </button>
-                </div>
-
-                
+                <main className="mt-2 flex-1 rounded-3xl bg-white shadow-sm">
+                    
+                </main>
             </div>
         </div>
     )
