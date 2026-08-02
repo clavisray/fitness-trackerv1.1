@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import FormInput from '../components/AuthInput';
-import AuthButton from "../components/AuthButtons";
+import FormInput from '../../components/AuthInput';
+import AuthButton from '../../components/AuthButtons';
 import { useState, type FormEvent } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../../lib/supabaseClient';
 import { FcGoogle } from "react-icons/fc";
 import { MdErrorOutline } from 'react-icons/md'
 

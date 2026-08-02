@@ -1,15 +1,31 @@
-import Header from '../components/Header'
-import HeroButton from '../components/HeroButton'
-import FormInput from '../components/AuthInput'
-import { useState } from 'react'
-import iphone from '../assets/iphone.png'
-import applepl from '../assets/download-apple-pl.svg'
-import googlepl from '../assets/download-google-pl.png'
-import { useNavigate } from 'react-router-dom';
+import Header from "../../components/Header"
+import HeroButton from "../../components/HeroButton"
+import FormInput from '../../components/AuthInput'
+import { useState, useContext } from 'react'
+import iphone from '../../assets/iphone.png'
+import applepl from '../../assets/download-apple-pl.svg'
+import googlepl from '../../assets/download-google-pl.png'
+import { Navigate, useNavigate } from 'react-router-dom';
+import { AuthContext } from "../../context/AuthContext"
 
 function Homepage() {
     const [email, setEmail] = useState("")
     const navigate = useNavigate();
+    const auth = useContext(AuthContext);
+
+    if (!auth) {
+        return null;
+    };
+
+    const { user, loading } = auth;
+
+    if (loading) { 
+        return null;
+    }
+
+    if (user) {
+        return <Navigate to="/dashboard" replace />
+    }
 
     function handleJoin() {
         navigate("/signup", {
