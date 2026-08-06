@@ -7,14 +7,6 @@ import Topbar from "../../components/DashboardTopbar";
 function Dashboard() {
     const navigate = useNavigate();
     const { user, logout } = useAuth();
-
-    const userName = user?.user_metadata.name as string | undefined;
-    const initals = userName
-    ?.split(" ")
-    .map(w => w[0])
-    .join("");
-
-    
     
     console.log(user);
     console.log(user?.email);
@@ -25,10 +17,10 @@ function Dashboard() {
         <div className="flex h-screen bg-zinc-50 p-2">
             <Sidebar />
 
-            <div className="flex flex-1 flex-col p-3">
-                <Topbar />
+            <div className="flex flex-1 flex-col px-2">
+                <Topbar title="Dashboard" titleMessage={`Witaj ponownie, ${user?.user_metadata.name}`}/>
 
-                <main className="mt-2 flex-1 rounded-3xl bg-white shadow-sm">
+                <main className="mt-2 flex-1 rounded-3xl shadow-sm">
                     
                 </main>
             </div>

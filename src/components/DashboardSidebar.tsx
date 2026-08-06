@@ -3,7 +3,7 @@ import DashButton from "./DashButton";
 import useAuth from "../hooks/useAuth";
 
 function Sidebar() {
-    const { user, logout } = useAuth();
+    const { logout } = useAuth();
 
     const navItems = [
         { label: "Dashboard", path:"/dashboard"},

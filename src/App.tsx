@@ -8,6 +8,9 @@ import Dashboard from './pages/app/Dashboard'
 import SignupSuccess from "./pages/public/SignupSuccess";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Settings from "./pages/app/Settings"
+import Profile from "./pages/app/Profile";
+import Diet from "./pages/app/Diet";
+import Calendar from "./pages/app/Calendar";
 
 
 function App() {
@@ -23,6 +26,9 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/diet" element={<Diet />} />
+            <Route path="/calendar" element={<Calendar />} />
           </Route>
           
           <Route path="/signup-success" element={<SignupSuccess />} />
