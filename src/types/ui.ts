@@ -17,3 +17,13 @@ export type FormErrors = {
     password?: string;
     general?: string;
 }
+
+export type NotificationsButtonProps = {
+    icon?: React.ReactNode;
+    onClick?: () => void;
+}
+
+export type CalendarDayProps = {
+    className?: string;
+    day: number;
+}

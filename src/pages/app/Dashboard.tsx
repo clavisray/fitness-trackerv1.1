@@ -8,11 +8,11 @@ function Dashboard() {
     const navigate = useNavigate();
     const { user, logout } = useAuth();
     
-    console.log(user);
+    /* console.log(user);
     console.log(user?.email);
     console.log(user?.id);
     console.log(user?.user_metadata);
-    console.log(user?.user_metadata.name);
+    console.log(user?.user_metadata.name); */
     return (
         <div className="flex h-screen bg-zinc-50 p-2">
             <Sidebar />
