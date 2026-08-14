@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import DashButton from "./DashButton";
 import useAuth from "../hooks/useAuth";
 
 function Sidebar() {

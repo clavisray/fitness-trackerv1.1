@@ -33,7 +33,7 @@ function Topbar({ title, titleMessage }: TopbarProps) {
     // console.log(initials);
 
     return (
-        <div className="flex items-center rounded-xl justify-between border-b border-zinc-100 bg-white px-6 py-4">
+        <div className="flex items-center rounded-xl justify-between border-b border-zinc-100 bg-sky-50 px-6 py-4">
             <div>
                 <h1 className="text-2xl">
                     {title}

@@ -12,7 +12,7 @@ function useCalendar() {
     const daysInMonth = getDaysInCurrentMonth(currentYear, currentMonth);
     const daysOfMonth: number[] = [];
     
-    for(let i = 0; i <= daysInMonth; i++) {
+    for(let i = 1; i <= daysInMonth; i++) {
         daysOfMonth.push(i);
     }
     
