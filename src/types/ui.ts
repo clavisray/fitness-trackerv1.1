@@ -36,6 +36,8 @@ export type CalendarEventType = {
     title: string;
     type: "workout" | "diet" | "note";
     day: number;
+    month: number;
+    year: number;
     content: string;
 }
 

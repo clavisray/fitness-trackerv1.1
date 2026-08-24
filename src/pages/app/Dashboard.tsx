@@ -14,13 +14,17 @@ function Dashboard() {
     console.log(user?.user_metadata);
     console.log(user?.user_metadata.name); */
     return (
-        <div className="flex h-screen bg-zinc-50 p-2">
+        <div className="flex h-screen bg-zinc-100 p-2">
             <Sidebar />
 
             <div className="flex flex-1 flex-col px-2">
-                <Topbar title="Dashboard" titleMessage={`Witaj ponownie, ${user?.user_metadata.name}`}/>
+                <Topbar title="Dashboard" titleMessage={`Witaj ponownie, ${user?.user_metadata.name}`}>
+                    <div className="">
 
-                <main className="mt-2 flex-1 rounded-3xl shadow-sm">
+                    </div>
+                </Topbar>
+
+                <main className="mt-2 flex-1 rounded-3xl shadow-sm bg-white">
                     
                 </main>
             </div>

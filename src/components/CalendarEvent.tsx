@@ -8,7 +8,7 @@ function CalendarEvent({ event, viewMode, onClick, }: CalendarEventProps) {
                 e.stopPropagation
                 onClick?.();
             }}
-            className='flex bg-indigo-300 text-white justify-center items-center rounded-xl cursor-pointer hover:bg-indigo-500 transition'
+            className='truncate rounded-md px-2 py-1 text-xs flex bg-indigo-300 text-white justify-center items-center rounded-xl cursor-pointer hover:bg-indigo-500 transition'
             >
                 TRENING: {event.title}
             </button>
