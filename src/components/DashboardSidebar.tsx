@@ -12,7 +12,7 @@ function Sidebar() {
         { label: "Ustawienia", path: "/settings"},
     ]
     return (
-        <section className='flex h-full flex-col gap-4 p-4 bg-sky-50 rounded-2xl border border-zinc-100 shadow-sm justify-between'>
+        <section className='flex h-full flex-col gap-4 p-4 bg-white/40 backdrop-blur-md rounded-2xl border border-white/20 shadow-sm justify-between'>
 
             <h2 className="font-bold text-xl text-sky-900">Fitness-tracker</h2>
 
@@ -22,14 +22,14 @@ function Sidebar() {
                     key={item.path}
                     to={item.path}
                     className={({ isActive }) => isActive 
-                    ? "rounded-xl bg-sky-200 px-4 py-3 text-sky-700 font-medium"
-                    : "rounded-xl px-4 py-3 text-zinc-600 hover:bg-sky-100 hover:text-sky-700 transition-colors"}>
+                    ? "rounded-xl bg-white/20 backdrop-blur-md border border-white/40 shadow-sm px-4 py-3 text-sky-900 font-medium"
+                    : "rounded-xl px-4 py-3 text-sky-900 hover:bg-white/20 hover:backdrop-blur-md transition-colors"}>
                         {item.label}
                     </NavLink>
                 ))}
             </nav>
 
-            <button type="button" className='hover:bg-sky-100 hover:text-sky-700 text-zinc-600 px-4 py-3 rounded-xl cursor-pointer' onClick={logout}>
+            <button type="button" className='rounded-xl px-4 py-3 text-sky-900 hover:bg-white/20 hover:backdrop-blur-md transition-colors cursor-pointer' onClick={logout}>
                 Wyloguj się
             </button>
         </section>

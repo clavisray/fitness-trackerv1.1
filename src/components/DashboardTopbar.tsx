@@ -47,7 +47,7 @@ function Topbar({ title, titleMessage, children }: TopbarProps) {
             </div>
 
             {/* middle notch */}
-            <div className="flex h-20 items-center justify-center rounded-3xl bg-white px-6 py-3">
+            <div className="flex font-bold text-black bg-white/20 backdrop-blur-md border border-white/20 shadow-sm h-20 items-center justify-center rounded-3xl px-6 py-3">
                 {children}
             </div>
 

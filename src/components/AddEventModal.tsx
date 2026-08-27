@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from "react";
 import type { AddEventModalProps, CalendarEventType } from "../types/ui";
 import close from '../assets/close.svg'
+import { monthNamesGenitive } from "../hooks/useCalendar";
+
 
 function AddEventModal({ day, month, onClose, onAddEvent }: AddEventModalProps) {
     const [eventType, setEventType] = useState<"workout" | "diet" | "note">("workout");
@@ -18,10 +20,12 @@ function AddEventModal({ day, month, onClose, onAddEvent }: AddEventModalProps) 
             day,
             month,
             year: 2026,
+            isDone: false,
         }
         onAddEvent(newEvent);
         onClose();
     };
+    console.log(day); console.log(month);
 
     return (
         <div onClick={onClose}
@@ -29,7 +33,7 @@ function AddEventModal({ day, month, onClose, onAddEvent }: AddEventModalProps) 
             <div onClick={(e) => e.stopPropagation()}
             className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl h-auto">
                 <div className="flex justify-between">
-                    Uzupełnij zdarzenie dla dnia {day}/{month}
+                    Utwórz nowe zdarzenie dla dnia {day} {monthNamesGenitive[month].toLowerCase()}
                     <img src={close} alt="close" className="cursor-pointer hover:bg-zinc-200 items-center justify-center rounded-sm" onClick={onClose}/>
                 </div>
                 
@@ -77,7 +81,7 @@ function AddEventModal({ day, month, onClose, onAddEvent }: AddEventModalProps) 
                     </div>
 
                     <input
-                        className="p-2 border rounded-sm border-indigo-200"
+                        className="p-2 border rounded-sm border-indigo-200 focus:border-indigo-500 focus:outline-none"
                         type="text"
                         placeholder="Tytuł zdarzenia"
                         value={title}
@@ -85,7 +89,7 @@ function AddEventModal({ day, month, onClose, onAddEvent }: AddEventModalProps) 
                     />
 
                     <textarea
-                        className="p-2 border rounded-sm border-indigo-200"
+                        className="h-50 p-2 border rounded-sm border-indigo-200 focus:border-indigo-500 focus:outline-none"
                         placeholder="Treść / notatka"
                         value={content}
                         onChange={(e) => setContent(e.target.value)}

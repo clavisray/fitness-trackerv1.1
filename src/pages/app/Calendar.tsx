@@ -20,15 +20,20 @@ function Calendar() {
         displayedYear,
         viewMode,
         setViewMode,
+        todayWeekDayIndex,
+        weekDates,
+        weekDays,
     } = useCalendar();
-    // console.log(currentDay);
-    // console.log(currentMonth);
-    // console.log(currentYear);
+
+    const firstDayOfMonth = new Date(displayedYear, displayedMonth, 1);
+    const firstDayOfWeek = firstDayOfMonth.getDay();
+    const startOffset = (firstDayOfWeek + 6) % 7;
+    
 
     const [events, setEvents] = useState<CalendarEventType[]>([
-        { id: "1", title: "klata", day: 14, month: 7, year: 2026, type: "workout", content: "" },
-        { id: "2", title: "klata", day: 13, month: 6, year: 2026, type: "diet", content: "" },
-        { id: "3", title: "klata", day: 12, month: 8, year: 2026, type: "note", content: "" },
+        { id: "1", title: "klata", day: 14, month: 7, year: 2026, type: "workout", content: "", isDone: false, },
+        { id: "2", title: "klata", day: 13, month: 7, year: 2026, type: "diet", content: "", isDone: false, },
+        { id: "3", title: "klata", day: 12, month: 7, year: 2026, type: "note", content: "", isDone: true, },
         
     ])
 
@@ -45,33 +50,37 @@ function Calendar() {
             setSelectedDay(day); 
     }
 
-
-
-    console.log(daysInMonth);
-
     return (
-        <main className="flex h-screen bg-zinc-100 p-2">
+        <main className="flex h-screen overflow-hidden bg-gradient-to-r from-lime-200 via-sky-100 to-indigo-200 p-2">
             <Sidebar />
 
             <div className="flex min-h-0 flex-1 flex-col px-2">
+
+                {/* ### TOP BAR ### */}
+
                 <Topbar title="Kalendarz" titleMessage="Zaplanuj swoje treningi">
                 <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center">
                     <div className="flex justify-start">
                         <button
                             onClick={previousMonth}
-                            className="cursor-pointer rounded-xl p-2 hover:bg-zinc-200 transition"
+                            className="cursor-pointer rounded-xl px-3 py-2 hover:bg-white/30 hover:backdrop-blur-md hover:shadow-sm transition"
                         >
                             ←
                         </button>
                     </div>
 
-                    <div className="font-medium">
-                        {displayedMonthName} {displayedYear}
+                    <div className="">
+                        <button 
+                            className="font-medium hover:bg-zinc-200 rounded-xl px-3 py-2 cursor-pointer transition"
+                            /*onClick={} to implement month and year dropdown*/
+                            >
+                            {displayedMonthName} {displayedYear}
+                        </button>
                     </div>
 
                     <div className="flex items-center justify-end gap-1 text-sm">
                         <button 
-                            className={`rounded-lg px-2 py-1 hover:bg-zinc-200 cursor-pointer transition
+                            className={`rounded-lg px-2 py-1 cursor-pointer hover:bg-white/30 hover:backdrop-blur-md hover:shadow-sm transition hover:text-black
                                 ${viewMode === "month" ? "underline font-medium" : "text-zinc-400"
                                 }`}
                             onClick={() => setViewMode("month")}>
@@ -81,7 +90,7 @@ function Calendar() {
                          |
                         </span>
                         <button 
-                            className={`rounded-lg px-2 py-1 hover:bg-zinc-200 cursor-pointer transition
+                            className={`rounded-lg px-2 py-1 cursor-pointer hover:bg-white/30 hover:backdrop-blur-md hover:shadow-sm transition hover:text-black
                                 ${viewMode === "week" ? "underline font-medium" : "text-zinc-400"
                                 }`}
                             onClick={() => setViewMode("week")}>
@@ -90,7 +99,7 @@ function Calendar() {
 
                         <button
                             onClick={nextMonth}
-                            className="cursor-pointer rounded-xl p-2 hover:bg-zinc-200 transition"
+                            className="cursor-pointer rounded-xl px-3 py-2 hover:bg-white/30 hover:backdrop-blur-md hover:shadow-sm transition"
                         >
                             →
                         </button>
@@ -98,22 +107,66 @@ function Calendar() {
                 </div>
                 </Topbar>
 
+                {/* Week day columns above the grid */}
+
+                <section>
+                    {viewMode === "week" &&
+                    <div className="grid grid-cols-7 gap-2 px-3">
+                        {weekDates.map((day, index) => (
+                                <div
+                                    key={day.toISOString()}
+                                    className={`flex items-center justify-center rounded-2xl px-2 py-3 ${
+                                        index === todayWeekDayIndex
+                                            ? "bg-white text-indigo-500 font-bold"
+                                            : "text-black font-bold rounded-2xl bg-white/20 backdrop-blur-md border border-white/20 shadow-sm"
+                                    }`}>
+                                       {weekDays[index].toLowerCase()} {day.getDate()}
+                                       
+                                </div>
+                            ))}
+                    </div>
+                    }
+
+                    {viewMode === "month" && 
+                    <div className="grid grid-cols-7 gap-2 px-3">
+                        {weekDays.map((day) => (
+                                <div
+                                    key={day}
+                                    className='flex items-center justify-center rounded-2xl px-2 py-3 text-black font-bold rounded-2xl bg-white/20 backdrop-blur-md border border-white/20 shadow-sm'>
+                                       {day.toLowerCase()}
+                                </div>
+                            ))}
+                    </div>
+                    }
+                    
+                </section>
+
                 {/* main content */}
                 {viewMode === "month" &&
-                    <section className="mt-2 flex min-h-0 flex-1 flex-col rounded-3xl bg-white shadow-sm">
-                        
-                        <div className="grid min-h-0 flex-1 grid-cols-7 auto-rows-fr gap-2 p-3">
+                    <section className="mt-2 flex min-h-0 flex-1 flex-col rounded-3xl bg-zinc-50 shadow-sm">
+                    
+                        <div className="grid min-h-0 flex-1 grid-cols-7 grid-rows-6 gap-2 p-3">
+                            
+                            {Array.from({ length: startOffset }).map((_, index) => (
+                                <div key={`empty-${index}`}></div>
+                            ))}
 
                             {daysOfMonth.map((day) => {
                                 const dayEvents = events.filter(
                                     (event) => event.day === day && event.month === displayedMonth && event.year === displayedYear
                                 );
 
+                                const isToday = 
+                                    day === currentDay &&
+                                    displayedMonth === currentMonth &&
+                                    displayedYear === currentYear;
+
                                 return(
                                     <CalendarDay
                                         key={day}
                                         day={day}
                                         events={dayEvents}
+                                        isToday={isToday}
                                         onClick={() => handleClickDay(day)}
                                     />
                                 );

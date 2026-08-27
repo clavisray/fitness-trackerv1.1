@@ -29,6 +29,7 @@ export type CalendarDayProps = {
     day: number;
     onClick?: () => void; 
     onEventClick?: (event: CalendarEventType) => void;
+    isToday?: boolean;
 }
 
 export type CalendarEventType = {
@@ -39,6 +40,7 @@ export type CalendarEventType = {
     month: number;
     year: number;
     content: string;
+    isDone: boolean;
 }
 
 export type CalendarEventProps = {
@@ -52,4 +54,14 @@ export type AddEventModalProps = {
     month: number;
     onClose: () => void;
     onAddEvent: (event: CalendarEventType) => void;
+}
+
+export type CalendarWeekDayType = {
+    day: number;
+    dayName: string;
+    className?: string;
+    events?: CalendarEventType[];
+    onClick?: () => void;
+    onEventClick?: (event: CalendarEventType) => void;
+    isToday?: boolean;
 }
