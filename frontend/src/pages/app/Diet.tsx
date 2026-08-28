@@ -7,7 +7,11 @@ function Diet() {
             <Sidebar />
 
             <div className="flex flex-1 flex-col px-2">
-                <Topbar title="Rozpiska diety"/>
+                <Topbar title="Rozpiska diety">
+                    <div>
+                        
+                    </div>
+                </Topbar>
 
                 <main className="mt-2 flex-1 rounded-3xl bg-white shadow-sm">
                     

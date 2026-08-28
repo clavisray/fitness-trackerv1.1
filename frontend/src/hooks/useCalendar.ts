@@ -86,9 +86,6 @@ function useCalendar() {
         return date;
     });
 
-    console.log(weekDates)
-
-
     return {
         currentYear,
         currentMonth,

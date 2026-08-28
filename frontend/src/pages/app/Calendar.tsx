@@ -11,7 +11,6 @@ function Calendar() {
         currentYear,
         currentMonth,
         currentDay,
-        daysInMonth,
         daysOfMonth,
         displayedMonthName,
         previousMonth,
@@ -38,7 +37,7 @@ function Calendar() {
     ])
 
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
-    const [selectedEvent, setSelectedEvent] = useState<CalendarEventType | null>(null);
+    // const [selectedEvent, setSelectedEvent] = useState<CalendarEventType | null>(null);
 
     function handleClickDay(day: number) {
         const dayEvents = events.filter(
