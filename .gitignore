@@ -24,3 +24,34 @@ dist-ssr
 *.sw?
 
 .env
+
+# backend
+# Maven / Spring
+target/
+.mvn/wrapper/maven-wrapper.jar
+HELP.md
+
+# IntelliJ
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# STS
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+build/
+
+# VS Code
+.vscode/
