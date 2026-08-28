@@ -29,7 +29,7 @@ function CalendarEvent({ event, viewMode, onClick, }: CalendarEventProps) {
         ) 
     }
 
-    if (viewMode === "week")
+    if (viewMode === "week") {
     return (
         <button className='flex bg-indigo-300 text-white justify-center items-center cursor-pointer hover:bg-indigo-500 transition '>
             <h3>{event.title}</h3>
@@ -38,5 +38,6 @@ function CalendarEvent({ event, viewMode, onClick, }: CalendarEventProps) {
         </button>
 
     )
+}
 }
 export default CalendarEvent;
