@@ -7,7 +7,7 @@ function Dashboard() {
     const { user } = useAuth();
     
     return (
-        <div className="flex h-screen bg-zinc-100 p-2">
+        <div className="flex h-screen bg-gradient-to-r from-lime-200 via-sky-100 to-indigo-200 p-2">
             <Sidebar />
 
             <div className="flex flex-1 flex-col px-2">

@@ -3,7 +3,7 @@ import Topbar from "../../components/DashboardTopbar";
 
 function Profile() {
     return (
-        <main className="flex h-screen bg-zinc-50 p-2">
+        <main className="flex h-screen bg-gradient-to-r from-lime-200 via-sky-100 to-indigo-200 p-2">
             <Sidebar />
 
             <div className="flex flex-1 flex-col px-2">

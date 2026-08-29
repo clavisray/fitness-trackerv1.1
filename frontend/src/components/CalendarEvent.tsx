@@ -1,6 +1,6 @@
 import type { CalendarEventProps } from "../types/ui";
 
-const baseClasses = "rounded-xl px-2 py-1 text-xs flex justify-center items-center cursor-pointer transition"
+const baseClasses = "w-full rounded-xl px-2 py-1 text-xs flex flex-col justify-center items-center cursor-pointer transition"
 
 const typeClasses = {
     workout: "bg-sky-300 border border-sky-400 text-sky-700 hover:bg-sky-400 hover:border-sky-500",
@@ -13,12 +13,13 @@ function CalendarEvent({ event, viewMode, onClick, }: CalendarEventProps) {
     const doneClasses = event.isDone
     ? "opacity-50 line-through"
     : "opacity-100";
+
     if (viewMode === "month") {
        return (
             <button 
-            onClick={(e) => {
-                e.stopPropagation
-                onClick?.();
+                onClick={(e) => {
+                    e.stopPropagation()
+                    onClick?.();
             }}
             className={`${baseClasses} ${typeClasses[event.type]} ${doneClasses}
             `}
@@ -31,13 +32,21 @@ function CalendarEvent({ event, viewMode, onClick, }: CalendarEventProps) {
 
     if (viewMode === "week") {
     return (
-        <button className='flex bg-indigo-300 text-white justify-center items-center cursor-pointer hover:bg-indigo-500 transition '>
-            <h3>{event.title}</h3>
-            <h3>{event.title}</h3>
-            <h3>{event.title}</h3>
-        </button>
-
-    )
-}
+            <button 
+                onClick={(e) => {
+                    e.stopPropagation()
+                    onClick?.();
+                }}
+                className={`${baseClasses} ${typeClasses[event.type]} ${doneClasses} w-full whitespace-normal
+                `}
+            >
+                <h3>{event.type}: {event.title}</h3>
+                {event.content &&
+                    <h3 className="mt-3">{event.content}</h3>
+                }
+                
+            </button>
+        )
+    }
 }
 export default CalendarEvent;

@@ -5,6 +5,7 @@ import useCalendar from '../../hooks/useCalendar'
 import type { CalendarEventType } from "../../types/ui";
 import { useState } from 'react'
 import AddEventModal from "../../components/AddEventModal";
+import CalendarWeekDay from "../../components/CalendarWeekDay";
 
 function Calendar() {
     const {
@@ -30,9 +31,9 @@ function Calendar() {
     
 
     const [events, setEvents] = useState<CalendarEventType[]>([
-        { id: "1", title: "klata", day: 14, month: 7, year: 2026, type: "workout", content: "", isDone: false, },
-        { id: "2", title: "klata", day: 13, month: 7, year: 2026, type: "diet", content: "", isDone: false, },
-        { id: "3", title: "klata", day: 12, month: 7, year: 2026, type: "note", content: "", isDone: true, },
+        { id: "1", title: "klata", day: 28, month: 7, year: 2026, type: "workout", content: "teas dawdas dawdwad wadwaw addwa wad", isDone: false, },
+        { id: "2", title: "klata", day: 29, month: 7, year: 2026, type: "diet", content: "", isDone: false, },
+        { id: "3", title: "klata", day: 27, month: 7, year: 2026, type: "note", content: "", isDone: true, },
         
     ])
 
@@ -123,6 +124,9 @@ function Calendar() {
                                        
                                 </div>
                             ))}
+
+                            
+
                     </div>
                     }
 
@@ -185,10 +189,38 @@ function Calendar() {
                         )}
                         
                     </section>
-                }       
+                }    
+
                 {viewMode === "week" &&
                 <section className="mt-2 flex min-h-0 flex-1 flex-col rounded-3xl bg-white shadow-sm">
-                    <div className="grid min-h-0 flex-1 grid-cols-7 auto-rows-fr gap-2 p-3">
+                    <div className="grid min-h-0 flex-1 grid-cols-7 auto-rows-fr gap-3 p-3">
+
+                        {weekDates.map((date) => {
+                            const day = date.getDate();
+                            const isToday = 
+                                    day === currentDay &&
+                                    displayedMonth === currentMonth &&
+                                    displayedYear === currentYear;
+                                    
+                            const dayEvents = events.filter(
+                                    (event) => 
+                                        event.day === date.getDate() && 
+                                        event.month === date.getMonth() && 
+                                        event.year === date.getFullYear()
+                                );
+
+                            return (
+                                <CalendarWeekDay
+                                    key={date.toISOString()}
+                                    day={day}
+                                    dayName="monday"
+                                    events={dayEvents}
+                                    className={``}
+                                    isToday={isToday}
+                                    onClick={() => handleClickDay(day)}
+                                />
+                            );
+                        })}
 
                     </div>
                 </section>
