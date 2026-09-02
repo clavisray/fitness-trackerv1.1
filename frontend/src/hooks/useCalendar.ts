@@ -1,108 +1,157 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 function getDaysInCurrentMonth(year: number, month: number) {
-    return new Date(year, month + 1, 0).getDate();
+  return new Date(year, month + 1, 0).getDate();
+}
+
+function addDays(date: Date, days: number) {
+  const newDate = new Date(date);
+
+  newDate.setDate(newDate.getDate() + days);
+
+  return newDate;
+}
+
+function addMonths(date: Date, months: number) {
+  const newDate = new Date(date);
+  const currentDay = newDate.getDate();
+
+  newDate.setDate(1);
+
+  newDate.setMonth(newDate.getMonth() + months);
+
+  const daysInTargetMonth = getDaysInCurrentMonth(
+    newDate.getFullYear(),
+    newDate.getMonth(),
+  );
+
+  newDate.setDate(Math.min(currentDay, daysInTargetMonth));
+
+  return newDate;
+}
+
+function getMonday(date: Date) {
+  const monday = new Date(date);
+  const weekDayIndex = (monday.getDay() + 6) % 7;
+  monday.setDate(monday.getDate() - weekDayIndex);
+  return monday;
 }
 
 export const monthNamesGenitive = [
-        "Stycznia", 
-        "Lutego", 
-        "Marca", 
-        "Kwietnia", 
-        "Maja", 
-        "Czerwca", 
-        "Lipca", 
-        "Sierpnia", 
-        "Września", 
-        "Października", 
-        "Listopada", 
-        "Grudnia"
-    ];
+  "Stycznia",
+  "Lutego",
+  "Marca",
+  "Kwietnia",
+  "Maja",
+  "Czerwca",
+  "Lipca",
+  "Sierpnia",
+  "Września",
+  "Października",
+  "Listopada",
+  "Grudnia",
+];
 
+const monthNames = [
+  "Styczeń",
+  "Luty",
+  "Marzec",
+  "Kwiecień",
+  "Maj",
+  "Czerwiec",
+  "Lipiec",
+  "Sierpień",
+  "Wrzesień",
+  "Październik",
+  "Listopad",
+  "Grudzień",
+];
+
+const weekDays = ["Pon", "Wt", "Śr", "Czw", "Pt", "Sob", "Nd"];
 
 function useCalendar() {
-    const today = new Date();
+  const today = new Date();
 
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth();
-    const currentDay = today.getDate();
-    const [displayedMonth, setDisplayedMonth] = useState(currentMonth)
-    const [displayedYear, setDisplayedYear] = useState(currentYear)
-    const daysInMonth = getDaysInCurrentMonth(currentYear, displayedMonth);
-    const daysOfMonth: number[] = [];
-    const [viewMode, setViewMode] = useState<"month" | "week">("month");
-    const weekDays = ["Pon", "Wt", "Śr", "Czw", "Pt", "Sob", "Nd",];
-    
-    for(let i = 1; i <= daysInMonth; i++) {
-        daysOfMonth.push(i);
-    }
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth();
+  const currentDay = today.getDate();
 
-    const monthNames = [
-        "Styczeń",
-        "Luty",
-        "Marzec",
-        "Kwiecień",
-        "Maj",
-        "Czerwiec",
-        "Lipiec",
-        "Sierpień",
-        "Wrzesień",
-        "Październik",
-        "Listopad",
-        "Grudzień",
-    ];
-    
-    function previousMonth() {
-        if (displayedMonth === 0) {
-            setDisplayedMonth(11);
-            setDisplayedYear((prev) => prev - 1);
-            return
-        }
-        setDisplayedMonth((prev) => prev - 1)
-    }
+  const [displayedDate, setDisplayedDate] = useState<Date>(() => new Date());
 
-    function nextMonth() {
-        if (displayedMonth === 11) {
-            setDisplayedMonth(0);
-            setDisplayedYear((prev) => prev + 1);
-            return
-        }
+  const [viewMode, setViewMode] = useState<"month" | "week">("month");
 
-        setDisplayedMonth((prev) => prev + 1)
-    }
-    const displayedMonthName = monthNames[displayedMonth];
+  const displayedMonth = displayedDate.getMonth();
+  const displayedYear = displayedDate.getFullYear();
 
-    const todayWeekDayIndex = (new Date().getDay() + 6) % 7;
+  const daysInMonth = getDaysInCurrentMonth(displayedYear, displayedMonth);
 
-    const currentDate = new Date();
+  const daysOfMonth = Array.from(
+    { length: daysInMonth },
+    (_, index) => index + 1,
+  );
 
-    const monday = new Date(currentDate);
+  const displayedMonthName = monthNames[displayedMonth];
 
-    monday.setDate(currentDate.getDate() - todayWeekDayIndex);
-
-    const weekDates = Array.from({ length: 7 }, (_, index) => {
-        const date = new Date(monday);
-        date.setDate(monday.getDate() + index);
-        return date;
+  function previousMonth() {
+    setDisplayedDate((previousDate) => {
+      return addMonths(previousDate, -1);
     });
+  }
 
-    return {
-        currentYear,
-        currentMonth,
-        currentDay,
-        daysInMonth,
-        daysOfMonth,
-        displayedMonthName,
-        nextMonth,
-        previousMonth,
-        displayedMonth,
-        displayedYear,
-        viewMode,
-        setViewMode,
-        todayWeekDayIndex,
-        weekDates,
-        weekDays,
-    };
+  function nextMonth() {
+    setDisplayedDate((previousDate) => {
+      return addMonths(previousDate, 1);
+    });
+  }
+
+  function previousWeek() {
+    setDisplayedDate((previousDate) => {
+      return addDays(previousDate, -7);
+    });
+  }
+
+  function nextWeek() {
+    setDisplayedDate((previousDate) => {
+      return addDays(previousDate, 7);
+    });
+  }
+
+  function goToToday() {
+    setDisplayedDate(new Date());
+  }
+
+  const monday = getMonday(displayedDate);
+
+  const weekDates = Array.from({ length: 7 }, (_, index) => {
+    return addDays(monday, index);
+  });
+
+  return {
+    currentYear,
+    currentMonth,
+    currentDay,
+
+    daysInMonth,
+    daysOfMonth,
+
+    displayedMonthName,
+    displayedMonth,
+    displayedYear,
+
+    previousMonth,
+    nextMonth,
+
+    previousWeek,
+    nextWeek,
+
+    goToToday,
+
+    viewMode,
+    setViewMode,
+
+    weekDates,
+    weekDays,
+  };
 }
 
 export default useCalendar;
