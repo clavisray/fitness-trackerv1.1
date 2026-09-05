@@ -52,6 +52,7 @@ export type CalendarEventProps = {
 export type AddEventModalProps = {
     day: number;
     month: number;
+    year: number;
     onClose: () => void;
     onAddEvent: (event: CalendarEventType) => void;
 }

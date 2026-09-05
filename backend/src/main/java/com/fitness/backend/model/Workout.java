@@ -71,12 +71,12 @@ public class Workout {
         this.workoutType = workoutType;
     }
 
-    public Boolean getDone() {
+    public Boolean getIsDone() {
         return isDone;
     }
 
-    public void setDone(Boolean done) {
-        isDone = done;
+    public void setIsDone(Boolean isDone) {
+        this.isDone = isDone;
     }
 
     public String getNotes() {

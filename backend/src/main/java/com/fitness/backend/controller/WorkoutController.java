@@ -1,5 +1,7 @@
 package com.fitness.backend.controller;
 
+import java.util.List;
+
 import com.fitness.backend.model.Workout;
 import com.fitness.backend.service.WorkoutService;
 import org.springframework.web.bind.annotation.*;
@@ -18,5 +20,10 @@ public class WorkoutController {
     @PostMapping
     public Workout createWorkout(@RequestBody Workout workout) {
         return workoutService.saveWorkout(workout);
+    }
+
+    @GetMapping
+    public List<Workout> getAllWorkouts() {
+        return workoutService.getAllWorkouts();
     }
 }
