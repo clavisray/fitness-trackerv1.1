@@ -5,7 +5,7 @@ import com.fitness.backend.service.WorkoutService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/workouts")
+@RequestMapping("/api/workout")
 @CrossOrigin(origins = "http://localhost:5173")
 public class WorkoutController {
 
