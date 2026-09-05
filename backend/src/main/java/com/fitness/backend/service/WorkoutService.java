@@ -1,5 +1,7 @@
 package com.fitness.backend.service;
 
+import java.util.List;
+
 import com.fitness.backend.repository.WorkoutRepository;
 import com.fitness.backend.model.Workout;
 import org.springframework.stereotype.Service;
@@ -15,5 +17,9 @@ public class WorkoutService {
 
     public Workout saveWorkout(Workout workout) {
         return workoutRepository.save(workout);
+    }
+
+    public List<Workout> getAllWorkouts() {
+        return workoutRepository.findAll();
     }
 }

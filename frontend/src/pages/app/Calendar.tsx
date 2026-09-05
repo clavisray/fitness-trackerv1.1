@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import CalendarDay from "../../components/CalendarDay";
 import Sidebar from "../../components/DashboardSidebar";
@@ -9,6 +9,14 @@ import CalendarWeekDay from "../../components/CalendarWeekDay";
 import useCalendar from "../../hooks/useCalendar";
 
 import type { CalendarEventType } from "../../types/ui";
+
+type WorkoutApi = {
+  id: number;
+  title: string;
+  notes: string;
+  isDone: boolean;
+  eventDate: string;
+};
 
 function Calendar() {
   const {
@@ -36,38 +44,7 @@ function Calendar() {
 
   const startOffset = (firstDayOfWeek + 6) % 7;
 
-  const [events, setEvents] = useState<CalendarEventType[]>([
-    {
-      id: "1",
-      title: "klata",
-      day: 28,
-      month: 7,
-      year: 2026,
-      type: "workout",
-      content: "teas dawdas dawdwad wadwaw addwa wad",
-      isDone: false,
-    },
-    {
-      id: "2",
-      title: "klata",
-      day: 29,
-      month: 7,
-      year: 2026,
-      type: "diet",
-      content: "",
-      isDone: false,
-    },
-    {
-      id: "3",
-      title: "klata",
-      day: 27,
-      month: 7,
-      year: 2026,
-      type: "note",
-      content: "",
-      isDone: true,
-    },
-  ]);
+  const [events, setEvents] = useState<CalendarEventType[]>([]);
 
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
@@ -80,6 +57,30 @@ function Calendar() {
 
     setSelectedDay(day);
   }
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/workout")
+    .then(response => response.json())
+    .then((data: WorkoutApi[]) => {
+      const mappedEvents: CalendarEventType[] = data.map((workout) => {
+        const [year, month, day] = workout.eventDate.split("-").map(Number);
+
+        return {
+          id: String(workout.id),
+          title: workout.title,
+          content: workout.notes,
+          isDone: workout.isDone,
+          type: "workout",
+          day: day,
+          month: month - 1,
+          year: year,
+        };
+      });
+
+      setEvents(mappedEvents);
+    });
+}, []);
+
 
   return (
     <main className="flex h-screen overflow-hidden bg-linear-to-r from-lime-200 via-sky-100 to-indigo-200 p-2">
@@ -231,6 +232,7 @@ function Calendar() {
               <AddEventModal
                 day={selectedDay}
                 month={displayedMonth}
+                year={displayedYear}
                 onClose={() => setSelectedDay(null)}
                 onAddEvent={(event) => {
                   setEvents((prev) => [...prev, event]);

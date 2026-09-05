@@ -2,12 +2,20 @@ import { useState, type FormEvent } from "react";
 import type { AddEventModalProps, CalendarEventType } from "../types/ui";
 import close from '../assets/close.svg'
 import { monthNamesGenitive } from "../hooks/useCalendar";
+import useAuth from '../hooks/useAuth';
 
 
-function AddEventModal({ day, month, onClose, onAddEvent }: AddEventModalProps) {
+function AddEventModal({ day, month, year, onClose, onAddEvent }: AddEventModalProps) {
+
+    const { user } = useAuth();
+
+    console.log(user);
+
     const [eventType, setEventType] = useState<"workout" | "diet" | "note">("workout");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+
+    const eventDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
     const buttonFormat = "cursor-pointer rounded-xl px-4 py-3 w-full flex items-center justify-center"
 
@@ -21,13 +29,34 @@ function AddEventModal({ day, month, onClose, onAddEvent }: AddEventModalProps) 
             content: content,
             day,
             month,
-            year: 2026,
+            year,
             isDone: false,
         }
+
+        const workoutData = {
+            userId: user?.id,
+            title: title,
+            workoutType: eventType,
+            isDone: false,
+            notes: content,
+            duration: 0,
+            eventDate: eventDate,
+            doneDate: null
+        }
+
+        if (eventType === "workout") {
+        fetch("http://localhost:8080/api/workout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(workoutData),
+        })
+    }
+
         onAddEvent(newEvent);
         onClose();
     };
-    console.log(day); console.log(month);
 
     return (
         <div onClick={onClose}
@@ -35,7 +64,7 @@ function AddEventModal({ day, month, onClose, onAddEvent }: AddEventModalProps) 
             <div onClick={(e) => e.stopPropagation()}
             className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl h-auto">
                 <div className="flex justify-between mb-3">
-                    Utwórz nowe zdarzenie dla dnia {day} {monthNamesGenitive[month].toLowerCase()}
+                    Utwórz nowe zdarzenie dla dnia {day} {monthNamesGenitive[month].toLowerCase()} {year}
                     <img src={close} alt="close" className="cursor-pointer hover:bg-zinc-200 items-center justify-center rounded-sm" onClick={onClose}/>
                 </div>
                 
@@ -109,6 +138,7 @@ function AddEventModal({ day, month, onClose, onAddEvent }: AddEventModalProps) 
                         type="submit">
                         ZATWIERDŹ
                     </button>
+                    
                 </form>
             </div>
         </div>
