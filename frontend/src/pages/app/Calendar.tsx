@@ -5,6 +5,8 @@ import Sidebar from "../../components/DashboardSidebar";
 import Topbar from "../../components/DashboardTopbar";
 import AddEventModal from "../../components/AddEventModal";
 import CalendarWeekDay from "../../components/CalendarWeekDay";
+import EditEventModal from "../../components/EditEventModal";
+
 
 import useCalendar from "../../hooks/useCalendar";
 
@@ -48,8 +50,15 @@ function Calendar() {
 
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
+  const [eventToEdit, setEventToEdit] =
+  useState<CalendarEventType | null>(null);
+
   function handleClickDay(day: number) {
-    const dayEvents = events.filter((event) => event.day === day);
+    const dayEvents = events.filter((event) => 
+      event.day === day
+      // month
+      // year
+  );
 
     if (dayEvents.length >= 3) {
       return;
@@ -222,6 +231,7 @@ function Calendar() {
                     day={day}
                     events={dayEvents}
                     isToday={isToday}
+                    onEventClick={(event) => setEventToEdit(event)}
                     onClick={() => handleClickDay(day)}
                   />
                 );
@@ -239,6 +249,23 @@ function Calendar() {
                 }}
               />
             )}
+
+            {eventToEdit && (
+              <EditEventModal
+                event={eventToEdit}
+                onClose={() => setEventToEdit(null)}
+                onUpdateEvent={(updatedEvent) => {
+                  setEvents((previousEvents) =>
+                    previousEvents.map((currentEvent) =>
+                      currentEvent.id === updatedEvent.id
+                        ? updatedEvent
+                        : currentEvent
+                    )
+                  );
+                }}
+              />
+            )}
+
           </section>
         )}
 
@@ -272,6 +299,18 @@ function Calendar() {
                   />
                 );
               })}
+
+              {selectedDay !== null && (
+              <AddEventModal
+                day={selectedDay}
+                month={displayedMonth}
+                year={displayedYear}
+                onClose={() => setSelectedDay(null)}
+                onAddEvent={(event) => {
+                  setEvents((prev) => [...prev, event]);
+                }}
+              />
+              )}
             </div>
           </section>
         )}
