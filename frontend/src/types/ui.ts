@@ -1,3 +1,5 @@
+import type { CalendarEventType } from "./calendar";
+
 export type ButtonVariant = "primary" | "secondary" | "third";
 
 export type DashButtonVariants = "default" | "defaultClicked" | "third";
@@ -30,17 +32,6 @@ export type CalendarDayProps = {
     onClick?: () => void; 
     onEventClick?: (event: CalendarEventType) => void;
     isToday?: boolean;
-}
-
-export type CalendarEventType = {
-    id: string;
-    title: string;
-    type: "workout" | "diet" | "note";
-    day: number;
-    month: number;
-    year: number;
-    content: string;
-    isDone: boolean;
 }
 
 export type CalendarEventProps = {

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import { getWorkoutEvents } from "../../api/calendar";
+
 import CalendarDay from "../../components/CalendarDay";
 import Sidebar from "../../components/DashboardSidebar";
 import Topbar from "../../components/DashboardTopbar";
@@ -8,15 +10,7 @@ import CalendarWeekDay from "../../components/CalendarWeekDay";
 
 import useCalendar from "../../hooks/useCalendar";
 
-import type { CalendarEventType } from "../../types/ui";
-
-type WorkoutApi = {
-  id: number;
-  title: string;
-  notes: string;
-  isDone: boolean;
-  eventDate: string;
-};
+import type { CalendarEventType } from "../../types/calendar";
 
 function Calendar() {
   const {
@@ -59,26 +53,9 @@ function Calendar() {
   }
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/workout")
-    .then(response => response.json())
-    .then((data: WorkoutApi[]) => {
-      const mappedEvents: CalendarEventType[] = data.map((workout) => {
-        const [year, month, day] = workout.eventDate.split("-").map(Number);
-
-        return {
-          id: String(workout.id),
-          title: workout.title,
-          content: workout.notes,
-          isDone: workout.isDone,
-          type: "workout",
-          day: day,
-          month: month - 1,
-          year: year,
-        };
-      });
-
-      setEvents(mappedEvents);
-    });
+    getWorkoutEvents()
+      .then(setEvents)
+      .catch(console.error);
 }, []);
 
 
