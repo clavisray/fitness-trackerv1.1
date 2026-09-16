@@ -1,6 +1,7 @@
 package com.fitness.backend.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.fitness.backend.model.Workout;
 import com.fitness.backend.service.WorkoutService;
@@ -22,8 +23,8 @@ public class WorkoutController {
         return workoutService.saveWorkout(workout);
     }
 
-    @GetMapping
-    public List<Workout> getAllWorkouts() {
-        return workoutService.getAllWorkouts();
+    @GetMapping("/user/{userId}")
+    public List<Workout> getWorkoutsByUserId(@PathVariable UUID userId) {
+        return workoutService.getWorkoutsByUserId(userId);
     }
 }

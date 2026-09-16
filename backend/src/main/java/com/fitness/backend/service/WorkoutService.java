@@ -1,6 +1,7 @@
 package com.fitness.backend.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.fitness.backend.repository.WorkoutRepository;
 import com.fitness.backend.model.Workout;
@@ -19,7 +20,8 @@ public class WorkoutService {
         return workoutRepository.save(workout);
     }
 
-    public List<Workout> getAllWorkouts() {
-        return workoutRepository.findAll();
+    public List<Workout> getWorkoutsByUserId(UUID userId) {
+        return workoutRepository.findByUserId(userId);
     }
+
 }

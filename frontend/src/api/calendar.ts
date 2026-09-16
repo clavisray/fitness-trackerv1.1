@@ -21,8 +21,10 @@ function workoutToCalendarEvent(
   };
 }
 
-export async function getWorkoutEvents(): Promise<CalendarEventType[]> {
-  const workouts = await apiFetch<WorkoutApi[]>("/workout");
+export async function getWorkoutEvents(
+  userId: string
+): Promise<CalendarEventType[]> {
+  const workouts = await apiFetch<WorkoutApi[]>(`/workout/user/${userId}`);
 
   return workouts.map(workoutToCalendarEvent);
 }

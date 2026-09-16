@@ -14,6 +14,8 @@ import useCalendar from "../../hooks/useCalendar";
 
 import type { CalendarEventType } from "../../types/calendar";
 
+import useAuth from "../../hooks/useAuth"
+
 function Calendar() {
   const {
     currentYear,
@@ -33,6 +35,8 @@ function Calendar() {
     weekDates,
     weekDays,
   } = useCalendar();
+
+  const { user } = useAuth();
 
   const firstDayOfMonth = new Date(displayedYear, displayedMonth, 1);
 
@@ -62,10 +66,12 @@ function Calendar() {
   }
 
   useEffect(() => {
-    getWorkoutEvents()
+    if (!user) return;
+
+    getWorkoutEvents(user.id)
       .then(setEvents)
       .catch(console.error);
-}, []);
+}, [user]);
 
 
   return (

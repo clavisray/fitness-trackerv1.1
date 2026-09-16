@@ -57,3 +57,9 @@ export type CalendarWeekDayType = {
     onEventClick?: (event: CalendarEventType) => void;
     isToday?: boolean;
 }
+
+export type EditEventModalProps = {
+    event: CalendarEventType;
+    onClose: () => void;
+    onUpdateEvent: (updatedEvent: CalendarEventType) => void;
+}
