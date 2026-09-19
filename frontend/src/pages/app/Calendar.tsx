@@ -276,7 +276,7 @@ function Calendar() {
                     day={day}
                     dayName="monday"
                     events={dayEvents}
-                    className=""
+                    className="transition"
                     isToday={isToday}
                     onClick={() => handleClickDay(day)}
                   />
