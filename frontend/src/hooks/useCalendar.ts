@@ -127,6 +127,8 @@ function useCalendar() {
   });
 
   return {
+    today,
+
     currentYear,
     currentMonth,
     currentDay,

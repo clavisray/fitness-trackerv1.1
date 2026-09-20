@@ -11,6 +11,8 @@ import Settings from "./pages/app/Settings"
 import Profile from "./pages/app/Profile";
 import Diet from "./pages/app/Diet";
 import Calendar from "./pages/app/Calendar";
+import Activity from "./pages/app/Activity";
+
 
 
 function App() {
@@ -28,6 +30,7 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/diet" element={<Diet />} />
+            <Route path="/activity" element={<Activity />} />
             <Route path="/calendar" element={<Calendar />} />
           </Route>
           
